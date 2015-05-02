@@ -53,8 +53,6 @@ module.exports = function(options) {
         break;
       }
     }
-    
-    console.log(ssdbClient.isAvailable());
 
     if (/*!ssdbClient.isAvailable() || */!match || (passParam && ctx.request.query[passParam])) {
       return yield * next;
