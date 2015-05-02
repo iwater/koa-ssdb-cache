@@ -1,15 +1,13 @@
 'use strict';
 
 var pathToRegExp = require('path-to-regexp'),
-  wrapper = require('co-redis'),
   readall = require('readall'),
-  Redis = require('redis');
+  ssdb = require('ssdb');
 
 module.exports = function(options) {
   options = options || {};
-  var redisAvailable = false,
-    redisOptions = options.redis || {},
-    prefix = options.prefix || 'koa-redis-cache:',
+  var ssdbOptions = options.ssdb || {},
+    prefix = options.prefix || 'koa-ssdb-cache:',
     expire = options.expire || 30 * 60, // 30 min
     routes = options.routes || ['(.*)'],
     exclude = options.exclude || [],
@@ -18,21 +16,13 @@ module.exports = function(options) {
     onerror = options.onerror || function() {};
 
   /**
-   * redisClient
+   * ssdbClient
    */
-  redisOptions.port = redisOptions.port || 6379;
-  redisOptions.host = redisOptions.host || 'localhost';
-  var redisClient = wrapper(Redis.createClient(redisOptions.port, redisOptions.host, redisOptions.options));
-  redisClient.on('error', function(error) {
-    redisAvailable = false;
-    onerror(error);
-  });
-  redisClient.on('end', function() {
-    redisAvailable = false;
-  });
-  redisClient.on('connect', function() {
-    redisAvailable = true;
-  });
+  ssdbOptions.port = ssdbOptions.port || 8888;
+  ssdbOptions.host = ssdbOptions.host || 'localhost';
+  ssdbOptions.promisify = true;
+  var pool = ssdb.createPool(ssdbOptions);
+  var ssdbClient = pool.acquire();
 
   return function * cache(next) {
     var ctx = this,
@@ -63,8 +53,10 @@ module.exports = function(options) {
         break;
       }
     }
+    
+    console.log(ssdbClient.isAvailable());
 
-    if (!redisAvailable || !match || (passParam && ctx.request.query[passParam])) {
+    if (/*!ssdbClient.isAvailable() || */!match || (passParam && ctx.request.query[passParam])) {
       return yield * next;
     }
 
@@ -91,14 +83,14 @@ module.exports = function(options) {
    * getCache
    */
   function * getCache(ctx, key, tkey) {
-    var value = yield redisClient.get(key),
+    var value = yield ssdbClient.get(key),//.catch(console.log),
       type,
       ok = false;
 
     if (value) {
       ctx.response.status = 200;
-      type = (yield redisClient.get(tkey)) || 'text/html';
-      ctx.response.set('X-Koa-Redis-Cache', 'true');
+      type = (yield ssdbClient.get(tkey)) || 'text/html';
+      ctx.response.set('X-Koa-SSDB-Cache', 'true');
       ctx.response.type = type;
       ctx.response.body = value;
       ok = true;
@@ -120,22 +112,23 @@ module.exports = function(options) {
     if (typeof body === 'string') {
       // string
       if (Buffer.byteLength(body) > maxLength) return;
-      yield redisClient.setex(key, expire, body);
+      yield ssdbClient.setx(key, body, expire);
     } else if (Buffer.isBuffer(body)) {
+      console.log(ctx.response.type);
       // buffer
       if (body.length > maxLength) return;
-      yield redisClient.setex(key, expire, body);
+      yield ssdbClient.setx(key, body, expire);
     } else if (typeof body === 'object' && ctx.response.type === 'application/json') {
       // json
       body = JSON.stringify(body);
       if (Buffer.byteLength(body) > maxLength) return;
-      yield redisClient.setex(key, expire, body);
+      yield ssdbClient.setx(key, body, expire);
     } else if (typeof body.pipe === 'function') {
       // stream
       body = yield read(body);
       ctx.response.body = body;
       if (Buffer.byteLength(body) > maxLength) return;
-      yield redisClient.setex(key, expire, body);
+      yield ssdbClient.setx(key, body, expire);
     } else {
       return;
     }
@@ -149,7 +142,7 @@ module.exports = function(options) {
   function * cacheType(ctx, tkey, expire) {
     var type = ctx.response.type;
     if (type) {
-      yield redisClient.setex(tkey, expire, type);
+      yield ssdbClient.setx(tkey, type, expire);
     }
   }
 };

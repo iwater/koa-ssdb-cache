@@ -1,7 +1,7 @@
 {
-  "name": "koa-redis-cache",
+  "name": "koa-ssdb-cache",
   "version": "0.5.0",
-  "description": "a middleware for koa to cache response with redis.",
+  "description": "a middleware for koa to cache response with ssdb.",
   "main": "index.js",
   "scripts": {
     "test": "node_modules/.bin/mocha --harmony -R spec -t 5000 test/*.js",
@@ -33,9 +33,11 @@
     "co-redis": "^1.1.0",
     "path-to-regexp": "1",
     "readall": "0.0.4",
-    "redis": "^0.12.0"
+    "redis": "^0.12.0",
+    "ssdb": "^0.3.1"
   },
   "devDependencies": {
+    "co": "^4.5.2",
     "istanbul-harmony": "*",
     "koa": "*",
     "mocha": "*",

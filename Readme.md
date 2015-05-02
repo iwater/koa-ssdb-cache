@@ -4,13 +4,13 @@
 [![License][license-img]][license-url]
 [![Dependency status][david-img]][david-url]
 
-### koa-redis-cache
+### koa-ssdb-cache
 
 how to use
 ```js
 var koa = require('koa'),
   app = koa(),
-  cache = require('koa-redis-cache');
+  cache = require('koa-ssdb-cache');
 
 var options = {
   expire: 60,
@@ -22,10 +22,10 @@ app.use(cache(options));
 ### options
 * prefix
   - type: `String`
-  - redis key prefix, default is `koa-redis-cache:`
+  - ssdb key prefix, default is `koa-ssdb-cache:`
 * expire
   - type: `Number`
-  - redis expire time (second), default is `30 * 60` (30 min)
+  - ssdb expire time (second), default is `30 * 60` (30 min)
 * passParam
   - type: `String`
   - if the passParam is existed in query string, not get from cache
@@ -43,22 +43,22 @@ app.use(cache(options));
 * onerror
   - type: `Function`
   - callback function for error, default is `function() {}`
-* redis
+* ssdb
   - type: `Object`
-  - redis options
-* redis.port
+  - ssdb options
+* ssdb.port
   - type: `Number`
-* redis.host
+* ssdb.host
   - type: `String`
-* redis.options
+* ssdb.options
   - type: `Object`
-  - see [node_redis](https://github.com/mranney/node_redis)
+  - see [node_ssdb](https://github.com/mranney/node_ssdb)
 
 ### set different expire for each route
 ```js
 var koa = require('koa'),
   app = koa(),
-  cache = require('koa-redis-cache');
+  cache = require('koa-ssdb-cache');
 
 var options = {
   routes: [{
@@ -73,18 +73,18 @@ app.use(cache(options));
 ```
 
 ### notes
-* `koa-redis-cache` will set a custom http header `X-Koa-Redis-Cache: true` when the response is from cache
+* `koa-ssdb-cache` will set a custom http header `X-Koa-SSDB-Cache: true` when the response is from cache
 
 ### License
 MIT
 
-[npm-img]: https://img.shields.io/npm/v/koa-redis-cache.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/koa-redis-cache
-[travis-img]: https://img.shields.io/travis/coderhaoxin/koa-redis-cache.svg?style=flat-square
-[travis-url]: https://travis-ci.org/coderhaoxin/koa-redis-cache
-[coveralls-img]: https://img.shields.io/coveralls/coderhaoxin/koa-redis-cache.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/coderhaoxin/koa-redis-cache?branch=master
+[npm-img]: https://img.shields.io/npm/v/koa-ssdb-cache.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/koa-ssdb-cache
+[travis-img]: https://img.shields.io/travis/coderhaoxin/koa-ssdb-cache.svg?style=flat-square
+[travis-url]: https://travis-ci.org/coderhaoxin/koa-ssdb-cache
+[coveralls-img]: https://img.shields.io/coveralls/coderhaoxin/koa-ssdb-cache.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/coderhaoxin/koa-ssdb-cache?branch=master
 [license-img]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [license-url]: http://opensource.org/licenses/MIT
-[david-img]: https://img.shields.io/david/coderhaoxin/koa-redis-cache.svg?style=flat-square
-[david-url]: https://david-dm.org/coderhaoxin/koa-redis-cache
+[david-img]: https://img.shields.io/david/coderhaoxin/koa-ssdb-cache.svg?style=flat-square
+[david-url]: https://david-dm.org/coderhaoxin/koa-ssdb-cache
