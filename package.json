@@ -1,6 +1,6 @@
 {
   "name": "koa-ssdb-cache",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "a middleware for koa to cache response with ssdb.",
   "main": "index.js",
   "scripts": {

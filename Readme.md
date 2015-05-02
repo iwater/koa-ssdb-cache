@@ -52,7 +52,7 @@ app.use(cache(options));
   - type: `String`
 * ssdb.options
   - type: `Object`
-  - see [node_ssdb](https://github.com/mranney/node_ssdb)
+  - see [node_ssdb](https://github.com/eleme/node-ssdb)
 
 ### set different expire for each route
 ```js
@@ -80,11 +80,11 @@ MIT
 
 [npm-img]: https://img.shields.io/npm/v/koa-ssdb-cache.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/koa-ssdb-cache
-[travis-img]: https://img.shields.io/travis/coderhaoxin/koa-ssdb-cache.svg?style=flat-square
-[travis-url]: https://travis-ci.org/coderhaoxin/koa-ssdb-cache
-[coveralls-img]: https://img.shields.io/coveralls/coderhaoxin/koa-ssdb-cache.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/coderhaoxin/koa-ssdb-cache?branch=master
+[travis-img]: https://img.shields.io/travis/iwater/koa-ssdb-cache.svg?style=flat-square
+[travis-url]: https://travis-ci.org/iwater/koa-ssdb-cache
+[coveralls-img]: https://img.shields.io/coveralls/iwater/koa-ssdb-cache.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/iwater/koa-ssdb-cache?branch=master
 [license-img]: http://img.shields.io/badge/license-MIT-green.svg?style=flat-square
 [license-url]: http://opensource.org/licenses/MIT
-[david-img]: https://img.shields.io/david/coderhaoxin/koa-ssdb-cache.svg?style=flat-square
-[david-url]: https://david-dm.org/coderhaoxin/koa-ssdb-cache
+[david-img]: https://img.shields.io/david/iwater/koa-ssdb-cache.svg?style=flat-square
+[david-url]: https://david-dm.org/iwater/koa-ssdb-cache
