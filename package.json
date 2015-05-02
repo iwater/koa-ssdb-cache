@@ -1,6 +1,6 @@
 {
   "name": "koa-ssdb-cache",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "a middleware for koa to cache response with ssdb.",
   "main": "index.js",
   "scripts": {
@@ -10,34 +10,32 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/coderhaoxin/koa-redis-cache.git"
+    "url": "https://github.com/iwater/koa-ssdb-cache.git"
   },
   "keywords": [
     "middleware",
     "response",
-    "redis",
+    "ssdb",
     "cache",
     "koa"
   ],
-  "author": "haoxin",
+  "author": "iwater",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/coderhaoxin/koa-redis-cache/issues"
+    "url": "https://github.com/iwater/koa-ssdb-cache/issues"
   },
-  "homepage": "https://github.com/coderhaoxin/koa-redis-cache",
+  "homepage": "https://github.com/iwater/koa-ssdb-cache",
   "files": [
     "index.js",
     "Readme.md"
   ],
   "dependencies": {
-    "co-redis": "^1.1.0",
     "path-to-regexp": "1",
     "readall": "0.0.4",
-    "redis": "^0.12.0",
-    "ssdb": "^0.3.1"
+    "ssdb": "0.3.1"
   },
   "devDependencies": {
-    "co": "^4.5.2",
+    "co": "*",
     "istanbul-harmony": "*",
     "koa": "*",
     "mocha": "*",
